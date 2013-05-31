@@ -10,12 +10,13 @@ object ApplicationBuild extends Build {
   val appDependencies = Seq(
     // Add your project dependencies here,
     jdbc,
-    "com.typesafe.play" %% "play-slick" % "0.3.2" 
+    "com.typesafe.play" %% "play-slick" % "0.3.2",
+    "org.json4s" %% "json4s-native" % "3.2.4"
   )
 
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
-    // Add your own project settings here      
+    // Add your own project settings here     
   )
 
 }

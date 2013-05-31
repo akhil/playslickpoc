@@ -8,16 +8,32 @@ import play.api.data._
 import play.api.data.Forms._
 import play.api.mvc._
 
+//import spray.json._
+
+//import DefaultJsonProtocol._ // !!! IMPORTANT, else `convertTo` and `toJson` won't work
+import org.json4s._
+import org.json4s.native.JsonMethods._
+import org.json4s.JsonDSL._
+
+import org.json4s.native.Serialization.{read, write => swrite}
+
 object Application extends Controller {
 
   import play.api.Play.current
-
+  implicit val formats = native.Serialization.formats(NoTypeHints)
   def index = Action {
     DB.withSession{ implicit session =>
       Ok(views.html.index(Query(Cats).list))
     }
   }
 
+  def list = Action {
+    val cats: List[Cat] =    
+		DB.withSession{ implicit session =>
+	    	Query(Cats).list
+	    }    
+    Ok(swrite(cats))    
+  }
   val catForm = Form(
     mapping(
       "name" -> text(),
