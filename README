@@ -1,0 +1,19 @@
+This is your new Play 2.1 application
+=====================================
+
+This file will be packaged with your application, when using `play dist`.
+
+
+Play slick poc using https://github.com/freekh/play-slick
+
+commands:
+
+1. play eclipse 
+	- to generate/update eclipse .project .classpath info
+	- Do this every time Build.scala, views or routes etc are modified and refresh the project.
+	
+2. play run
+	- to run the app
+	
+3. play test
+	- to test the app
