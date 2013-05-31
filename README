@@ -22,4 +22,4 @@ commands:
 open http://localhost:9000 for default scala templates
 use http://localhost:9000/assets/index.html for angularjs ones
 
-
+Akhil
