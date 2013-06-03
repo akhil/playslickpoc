@@ -25,5 +25,13 @@ class ApplicationSpec extends Specification {
       contentType(home) must beSome.which(_ == "text/html")
       contentAsString(home) must contain ("kitty cat")
     }
+    
+    "update the data" in new WithApplication {
+    	val res = route(FakeRequest(POST, "/update?name=test1&color=test12")).get
+    	status(res) must equalTo(OK)
+    	println(contentType(res))
+    	contentType(res) must beSome.which(_ == "application/json")    	
+    	contentAsString(res) must equalTo ("\"1\"")
+    }
   }
 }

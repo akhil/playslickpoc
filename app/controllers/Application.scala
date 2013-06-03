@@ -34,6 +34,14 @@ object Application extends Controller {
 	    }    
     Ok(swrite(cats))    
   }
+  
+  def update = Action { implicit request =>
+    val cat = catForm.bindFromRequest.get
+    val u = DB.withSession{ implicit session =>
+      Query(Cats).filter(_.name === cat.name).update(cat)
+    }
+    Ok(swrite(u.toString)).as("application/json") 
+  }
   val catForm = Form(
     mapping(
       "name" -> text(),
