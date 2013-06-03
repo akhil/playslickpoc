@@ -33,5 +33,12 @@ class ApplicationSpec extends Specification {
     	contentType(res) must beSome.which(_ == "application/json")    	
     	contentAsString(res) must equalTo ("\"1\"")
     }
+    
+    "update data failed" in new WithApplication {
+    	val res = route(FakeRequest(POST, "/update?name=test1123&color=test12")).get
+    	status(res) must equalTo(INTERNAL_SERVER_ERROR)
+    	//println(contentType(res))
+    	//contentType(res) must beSome.which(_ == "application/json")    	
+    }
   }
 }

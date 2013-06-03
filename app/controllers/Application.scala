@@ -40,7 +40,8 @@ object Application extends Controller {
     val u = DB.withSession{ implicit session =>
       Query(Cats).filter(_.name === cat.name).update(cat)
     }
-    Ok(swrite(u.toString)).as("application/json") 
+    if(u == 1) Ok(swrite(u.toString)).as("application/json") 
+    else InternalServerError("Update failed: " + cat)
   }
   val catForm = Form(
     mapping(
