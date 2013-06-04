@@ -27,6 +27,13 @@ object Application extends Controller {
     }
   }
 
+  def get(name:String) = Action {   
+    val cat = DB.withSession{ implicit session =>
+      Query(Cats).filter(_.name === name).firstOption
+    }
+    if(cat != None) Ok(swrite(cat)).as("application/json") 
+    else NotFound("Cat nane: " + name)
+  }
   def list = Action {
     val cats: List[Cat] =    
 		DB.withSession{ implicit session =>

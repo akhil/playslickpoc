@@ -5,7 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index
 
-GET	/list                       controllers.Application.list
+GET		/get                       	controllers.Application.get(name:String)
+
+GET		/list                      	controllers.Application.list
 # Home page
 POST    /insert                     controllers.Application.insert
 
