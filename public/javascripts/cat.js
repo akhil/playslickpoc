@@ -16,7 +16,7 @@ function ListCtrl($scope, Cat) {
 function CreateCtrl($scope, $location, Cat) {
   $scope.save = function() {
     Cat.save($scope.cat, function(cat) {
-      $location.path('/edit/' + cat.$name);
+      $location.path('/edit/' + cat.name);
     });
   }
 }

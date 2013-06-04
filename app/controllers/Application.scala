@@ -75,7 +75,8 @@ object Application extends Controller {
     val pCat = DB.withSession{ implicit session =>
       Cats.insert(cat)
     }
-    Ok(swrite(pCat.toString)).as("application/json")
+    if(pCat == 1) Ok(swrite(cat)).as("application/json")
+    else InternalServerError("Unable to create: " + cat)
   }
   def insert = Action { implicit request =>
     val cat = catForm.bindFromRequest.get

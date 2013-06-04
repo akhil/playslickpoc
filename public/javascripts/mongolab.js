@@ -1,10 +1,14 @@
 // This is a module for cloud persistance in mongolab - https://mongolab.com
 angular.module('mongolab', ['ngResource']).
     factory('Cat', function($resource) {
-      var Cat = $resource('/:verb')
+      var Cat = $resource('/:verb', {}, 
+	  			{
+					update: { method: 'PUT' ,params: {verb:'update'} },
+					save: {method:'POST', params:{verb:'create'}}
+				})
  
       Cat.prototype.update = function(cb) {
-        return Cat.update({name: this.name, verb:'update', method:"POST"}, cb);
+        return Cat.update({name: this.name, color: this.color}, cb);
       };
 	  
 	  Cat.prototype.get = function(cb) {
