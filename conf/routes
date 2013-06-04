@@ -5,11 +5,15 @@
 # Home page
 GET     /                           controllers.Application.index
 
+DELETE	/delete                    	controllers.Application.delete(name:String)
+
 GET		/get                       	controllers.Application.get(name:String)
 
 GET		/list                      	controllers.Application.list
 # Home page
 POST    /insert                     controllers.Application.insert
+
+POST	/create						controllers.Application.create
 
 POST    /update                     controllers.Application.update
 

@@ -20,6 +20,9 @@ import org.json4s.native.Serialization.{read, write => swrite}
 object Application extends Controller {
 
   import play.api.Play.current
+  //import play.api.db.slick.DB
+  //import play.api.db.slick.Config.driver.simple._
+
   implicit val formats = native.Serialization.formats(NoTypeHints)
   def index = Action {
     DB.withSession{ implicit session =>
@@ -32,7 +35,17 @@ object Application extends Controller {
       Query(Cats).filter(_.name === name).firstOption
     }
     if(cat != None) Ok(swrite(cat)).as("application/json") 
-    else NotFound("Cat nane: " + name)
+    else NotFound("Cat name: " + name)
+  }
+  
+  def delete(name:String) = Action {
+    println(name)
+    val d = DB.withSession { implicit session =>
+        Query(Cats).filter(_.name === name).delete         
+      }
+    println(d)
+    if(d == 0) NotFound("Cat name: " + name)
+    else Ok
   }
   def list = Action {
     val cats: List[Cat] =    
@@ -57,6 +70,13 @@ object Application extends Controller {
     )(Cat.apply)(Cat.unapply)
   )
 
+  def create = Action { implicit request =>
+    val cat = catForm.bindFromRequest.get
+    val pCat = DB.withSession{ implicit session =>
+      Cats.insert(cat)
+    }
+    Ok(swrite(pCat.toString)).as("application/json")
+  }
   def insert = Action { implicit request =>
     val cat = catForm.bindFromRequest.get
     DB.withSession{ implicit session =>

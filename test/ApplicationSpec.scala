@@ -61,7 +61,26 @@ class ApplicationSpec extends Specification {
     
     "get invalid data by name" in new WithApplication {
       val res = route(FakeRequest(GET, "/get?name=test1134232323")).get 
+      status(res) must equalTo(NOT_FOUND)     
+    }
+    
+    "delete non existant name" in new WithApplication {
+      //val res = route(FakeRequest(POST, "/update?name=test1123&color=test12")).get
+      val res = route(FakeRequest(DELETE, "/delete?name=test1134232323")).get
+      val s = contentAsString(res)
       status(res) must equalTo(NOT_FOUND)
+      contentAsString(res) must equalTo("Cat name: test1134232323")
+    }
+    
+    "insert and delete" in new WithApplication {
+      val res = route(FakeRequest(POST, "/create?name=testInsert&color=test12345")).get
+      contentAsString(res) must equalTo ("\"1\"")
+      status(res) must equalTo(OK)
+      
+      val resd = route(FakeRequest(DELETE, "/delete?name=testInsert")).get
+      val sd = contentAsString(resd)
+      status(resd) must equalTo(OK)
+      println(sd)
     }
   }
 }
